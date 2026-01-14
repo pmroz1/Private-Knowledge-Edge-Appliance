@@ -75,6 +75,19 @@ public class QdrantService : IQdrantService
         }
     }
 
+    public async Task<List<string>> SearchAsync(
+        string collectionName,
+        float[] vector,
+        int limit = 3
+    )
+    {
+        await EnsureCollectionAsync(collectionName);
+
+        var hits = await _qdrantClient.SearchAsync(collectionName, vector, limit: (ulong)limit);
+
+        return hits.Select(h => h.Payload["text"].StringValue).ToList();
+    }
+
     private async Task EnsureCollectionAsync(string collectionName)
     {
         var collections = await _qdrantClient.ListCollectionsAsync();

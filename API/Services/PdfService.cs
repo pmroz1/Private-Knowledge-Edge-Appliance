@@ -16,8 +16,18 @@ public class PdfService : IPdfService
             var text = new StringBuilder();
             foreach (var page in document.GetPages())
             {
-                text.Append(page.Text);
-                text.Append(' '); // Add space between pages
+                var words = page.GetWords();
+                foreach (var word in words)
+                {
+                    if (word.Text.Contains("TCPDF") || word.Text.Contains("www.tcpdf.org"))
+                    {
+                        continue;
+                    }
+
+                    text.Append(word.Text);
+                    text.Append(' ');
+                }
+                text.AppendLine();
             }
             return text.ToString().Trim();
         });
