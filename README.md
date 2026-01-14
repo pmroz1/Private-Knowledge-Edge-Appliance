@@ -2,6 +2,10 @@
 
 A RAG (Retrieval-Augmented Generation) application that allows you to chat with your PDF documents using a local LLM (Ollama) and Vector Database (Qdrant).
 
+<p align="center">
+  <img src="docs/media/demo.gif" alt="App Demo" width="800">
+</p>
+
 ## Tech Stack
 
 - **Backend**: .NET 8 Web API
