@@ -7,8 +7,9 @@ services:
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - Qdrant__Url=http://qdrant:6333
-      - Ollama__Url=http://ollama:11434
+      - Qdrant__Host=qdrant
+      - Qdrant__Port=6334
+      - Ollama__BaseUrl=http://ollama:11434
     depends_on:
       - qdrant
       - ollama
@@ -38,3 +39,17 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+
+  init-ollama:
+    image: ollama/ollama:latest
+    container_name: init-ollama
+    volumes:
+      - ./ollama_models:/root/.ollama
+    entrypoint: /bin/sh
+    command:
+      - "-c"
+      - "sleep 5; ollama pull nomic-embed-text"
+    environment:
+      - OLLAMA_HOST=ollama:11434
+    depends_on:
+      - ollama

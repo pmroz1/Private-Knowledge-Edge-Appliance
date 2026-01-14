@@ -13,7 +13,11 @@ public static class Docs
             .DisableAntiforgery();
     }
 
-    private static async Task<IResult> Upload(IFormFile file, IPdfService pdfService)
+    private static async Task<IResult> Upload(
+        IFormFile file,
+        IPdfService pdfService,
+        IQdrantService qdrantService
+    )
     {
         if (file == null || file.Length == 0)
         {
@@ -24,7 +28,18 @@ public static class Docs
         {
             using var stream = file.OpenReadStream();
             var text = await pdfService.ExtractTextAsync(stream);
-            return Results.Ok(new { Text = text });
+
+            var metadata = new Dictionary<string, object>
+            {
+                { "filename", file.FileName },
+                { "uploadDate", DateTime.UtcNow },
+            };
+
+            await qdrantService.UpsertTextAsync("documents", text, metadata);
+
+            return Results.Ok(
+                new { Text = text, Message = "Document processed and uploaded to Qdrant." }
+            );
         }
         catch (Exception ex)
         {
