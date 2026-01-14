@@ -14,6 +14,16 @@ services:
       - qdrant
       - ollama
 
+  frontend:
+    image: private-knowledge-frontend
+    build:
+      context: ./PrivateKnowledgeEdgeAppliance
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
+
   qdrant:
     image: qdrant/qdrant:latest
     container_name: qdrant

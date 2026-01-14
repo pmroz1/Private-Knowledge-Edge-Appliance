@@ -1,30 +1,54 @@
 # Private Knowledge Edge Appliance
 
-This project consists of a .NET API and an Angular frontend.
+A RAG (Retrieval-Augmented Generation) application that allows you to chat with your PDF documents using a local LLM (Ollama) and Vector Database (Qdrant).
 
-## Project Structure
+## Tech Stack
 
-- `API/`: .NET 8 Web API
-- `PrivateKnowledgeEdgeAppliance/`: Angular Frontend
+- **Backend**: .NET 8 Web API
+- **Frontend**: Angular + PrimeNG
+- **AI/ML**: Ollama (Llama 3.2), Qdrant (Vector DB)
 
-## Getting Started
+## 🚀 Quick Start in 1 Step
 
-### API
+You can run the entire stack (Frontend, Backend, Database, AI) using Docker Compose.
 
-1. Navigate to the `API` directory.
-2. Run `dotnet restore`.
-3. Run `dotnet run`.
+### Prerequisites
 
-### Frontend
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+- (Optional) NVIDIA GPU drivers if you want GPU acceleration for Ollama.
 
-1. Navigate to the `PrivateKnowledgeEdgeAppliance` directory.
-2. Run `npm install`.
-3. Run `npm start`.
+### Run
+
+1.  Clone this repository.
+2.  Run the following command in the root directory:
+
+```powershell
+docker-compose up --build
+```
+
+That's it!
+
+- **Frontend**: Open [http://localhost:4200](http://localhost:4200)
+- **API Swagger**: Open [http://localhost:5000/swagger](http://localhost:5000/swagger)
+- **Qdrant Dashboard**: Open [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
+
+_Note: The first launch might take a few minutes as it downloads the LLM models (Llama 3.2 and Nomic Embed)._
 
 ## Development
 
-Built with:
+If you want to run components individually:
 
-- **Backend:** .NET, C#
-- **Frontend:** Angular, TypeScript, Signals
-- **Styling:** Vanilla CSS / PrimeNG
+### Backend (API)
+
+```powershell
+cd API
+dotnet run
+```
+
+### Frontend
+
+```powershell
+cd PrivateKnowledgeEdgeAppliance
+npm install
+npm start
+```
